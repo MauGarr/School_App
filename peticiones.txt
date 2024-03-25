@@ -1,0 +1,43 @@
+En Postman
+
+Get 
+http://localhost:3000/students
+en headers o Auth
+    Key: x-api-key
+    Value: la_contraseña
+
+Get
+http://localhost:3000/students/consultar-alumno/:grado
+En Auth
+    Key: x-api-key
+    Value: la_contraseña
+
+Post
+http://localhost:3000/students/crear-alumno
+En Auth
+    Key: x-api-key
+    Value: la_contraseña
+
+        ejemplo
+            {
+                "nombre": "gerardo Garcia",
+                "fechanacimiento": "2005-05-24",
+                "nombrepadre": "maug gar",
+                "nombremadre": "jhee",
+                "grado": "5to",
+                "seccion": "a",
+                "fechaingreso": "2004-05-15"
+            }
+
+Delete
+http://localhost:3000/students/:id
+En Auth
+    Key: x-api-key
+    Value: la_contraseña
+
+Patch
+http://localhost:3000/students/:id
+En Auth
+    Key: x-api-key
+    Value: la_contraseña
+    
