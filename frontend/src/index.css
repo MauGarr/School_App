@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background-image: radial-gradient( circle farthest-corner at -3.3% 48%,  rgba(141,146,239,1) 0%, rgba(99,229,254,1) 90% );
+    color: white;
+}
