@@ -1,0 +1,94 @@
+
+---LINK VIDEO INSTRUCCIONES USO---
+https://drive.google.com/file/d/1jkPYHNku4pnd3cxFMEL7vnFB67GpkI-X/view?usp=sharing
+
+---BACKEND---
+Para poder ejecutar el backend por parte de nest.js:
+
+-Se necesita instalar en la ruta: \backend
+    -npm install
+    -npm i -g @nestjs/cli
+    
+    -Ejecutar el backend en el servidor puerto localhost:3000
+        npm run start:dev
+
+---FRONTEND---
+Para poder ejecutar el frontend por parte de React:
+
+-instalar node.js
+-instalar
+    npm install react react-dom react-scripts
+
+-instalar siempre en la ruta: \frontend
+    -para poder trabajar el proyecto con react y vite
+        npm install -g create-vite
+
+    -para ejecutar el frontend en la ruta: \frontend
+        npm run dev
+
+----Instalar (necesario)----
+En la ruta: \backend
+    npm install @nestjs/swagger class-validator class-transformer
+    npm install --save @nestjs/typeorm typeorm
+    npm install --save @nestjs/common
+    npm install --save @nestjs/types
+    npm install --save @nestjs/swagger
+
+---agregar en main.ts---
+para los CORS 
+    import { NestFactory } from '@nestjs/core'
+    app.enableCors();
+
+    ---conectar base de datos MYSQL---
+        en la ruta: \backend
+        npm install --save @nestjs/typeorm typeorm mysql
+        
+    ---Seguridad API-KEY---
+        -instalar en la ruta: \backend
+            npm install dotenv
+        -crear .env en la ruta: \backend
+            .env
+                (agregar)
+                API_KEY="la_contraseña"
+        
+        -crear archivo api-key.guard.ts en la ruta: /backend/src/students/
+            import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+
+            @Injectable()
+            export class ApiKeyGuard implements CanActivate {
+            async canActivate(context: ExecutionContext): Promise<boolean> {
+                const request = context.switchToHttp().getRequest();
+                const apiKey = request.headers['x-api-key'];
+
+                if (apiKey !== process.env.API_KEY) {
+                throw new UnauthorizedException('Invalid API Key');
+                }
+
+                return true;
+            }
+            }
+
+        -agregar en el controller students.controller.ts en los imports
+            import { UseGuards } from '@nestjs/common'
+            import { ApiKeyGuard } from './api-key.guard';
+
+            @UseGuards(ApiKeyGuard)
+            @Controller('students')
+
+        -agregar en main.ts en los imports
+            require('dotenv').config();
+
+        ---Fronted---
+        -agregar en students.api.js
+            // Agrega un interceptor de solicitud
+            studentApi.interceptors.request.use(
+                config => {
+                // Modifica la configuración de la solicitud aquí
+                config.headers['x-api-key'] = 'la_contraseña';
+                return config;
+                },
+                error => {
+                // Si hay un error, rechaza la promesa
+                return Promise.reject(error);
+                }
+            );
