@@ -15,8 +15,8 @@ Para poder ejecutar el backend por parte de nest.js:
 ---FRONTEND---
 Para poder ejecutar el frontend por parte de React:
 
--instalar node.js
 -instalar
+    node.js
     npm install react react-dom react-scripts
 
 -instalar siempre en la ruta: \frontend
